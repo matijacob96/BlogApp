@@ -10,7 +10,7 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  date = new Date;
+  date = new Date();
   loginForm: FormGroup;
   submitted = false;
   loading = false;
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
-    })
+    });
   }
 
   get f() { return this.loginForm.controls; }
@@ -43,7 +43,12 @@ export class LoginComponent implements OnInit {
 
     this.user = new User(this.f.username.value, this.f.password.value);
 
-    console.log( this.user );
+    this.loginService.login( this.user ).subscribe( (result) => {
+      console.log(result);
+    }, (error) => {
+      this.error = error;
+      this.loading = false;
+    });
   }
 
 }
