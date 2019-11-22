@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../models/user.model';
 import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -44,7 +46,11 @@ export class LoginComponent implements OnInit {
     this.user = new User(this.f.username.value, this.f.password.value);
 
     this.loginService.login( this.user ).subscribe( (result) => {
-      console.log(result);
+      if( result['status'] === 'success'){
+        this.router.navigate(['/home']);
+      } else {
+        this.error = 'Wrong username or password';
+      }
     }, (error) => {
       this.error = error;
       this.loading = false;
