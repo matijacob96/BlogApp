@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  posts: any[];
+
+  constructor( private authService: AuthService, private router: Router, private postService: PostService ) { }
 
   ngOnInit() {
+    this.getPosts();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['']);
+  }
+
+  getPosts() {
+    this.postService.getAllPost().subscribe((result) => {
+      this.posts = result['data'];
+      console.log( this.posts);
+    })
   }
 
 }
