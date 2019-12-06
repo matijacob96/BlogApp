@@ -1,4 +1,5 @@
 export class Post {
+  
     private id = '';
     private title;
     private text;
@@ -28,4 +29,8 @@ export class Post {
     setId(id){
         this.id = id;
     }
+
+    getId() {
+        return this.id;
+      }
 }

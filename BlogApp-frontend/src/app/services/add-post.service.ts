@@ -6,6 +6,7 @@ import { Post } from '../models/post.model';
   providedIn: 'root'
 })
 export class AddPostService {
+  
 
   constructor(private http: HttpClient) { }
 
@@ -16,6 +17,18 @@ export class AddPostService {
         title : post.getTitle(),
         text : post.getText(),
         author_id: user.id
+    });
+  }
+
+  updatePost(post: Post) {
+    console.log(post);
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+
+    return this.http.post('/api/post/updatePost', {
+      id: post.getId(),
+      title: post.getTitle(),
+      text: post.getText(),
+      author_id: user.id
     });
   }
 }

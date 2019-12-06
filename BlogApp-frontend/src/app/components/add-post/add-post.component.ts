@@ -12,8 +12,8 @@ import { CommonService } from "../../services/common.service";
 export class AddPostComponent implements OnInit {
   postForm: FormGroup;
   submitted = false;
-  post: Post;
-  @ViewChild("closeBtn", { static: false }) closeBtn: ElementRef;
+  post: Post = new Post('','');
+  @ViewChild('closeBtn', { static: false }) closeBtn: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,6 +39,11 @@ export class AddPostComponent implements OnInit {
     return this.postForm.controls;
   }
 
+  resetForm() {
+    this.f.title.setValue('');
+    this.f.text.setValue('');
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -46,18 +51,29 @@ export class AddPostComponent implements OnInit {
       return;
     }
 
-    this.post.setText(this.f.title.value);
+    this.post.setTitle(this.f.title.value);
     this.post.setText(this.f.text.value);
 
-    this.addPostService.addPost(this.post).subscribe(result => {
-      if (result["status"] === "success") {
-        this.closeBtn.nativeElement.click();
-        this.commonService.notifyPostAddition();
-      } else {
-        console.log("Error adding post");
-      }
-    });
-  }
+    if(this.post.getId() === ''){
+      this.addPostService.addPost(this.post).subscribe((result) => {
+        if (result['status'] === 'success'){
+          this.closeBtn.nativeElement.click();
+          this.commonService.notifyPostAddition();
+        } else {
+          console.log('Error adding post');
+        }
+      });
+    } else {
+      this.addPostService.updatePost(this.post).subscribe((result) => {
+        if(result['status']==='success'){
+          this.closeBtn.nativeElement.click();
+          this.commonService.notifyPostAddition();
+        } else {
+          console.log('Error editing post');
+        }
+      });
+    }
+  } 
 
   setPostToEdit() {
     this.post = this.commonService.postToEdit;

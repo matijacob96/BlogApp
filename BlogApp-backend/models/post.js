@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const Mongoose = require('mongoose');
+const Schema = Mongoose.Schema;
 // create a schema
 const postSchema = new Schema({
     title: { type: String, required: true },
@@ -7,6 +7,6 @@ const postSchema = new Schema({
     author_id: { type: Schema.Types.ObjectId, ref: 'User' }
 }, { collection: 'post' });
 
-const Post = mongoose.model('Post', postSchema);
+const Post = Mongoose.model('Post', postSchema);
 
 module.exports = Post;

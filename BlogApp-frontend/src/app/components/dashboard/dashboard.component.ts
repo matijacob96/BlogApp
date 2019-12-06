@@ -12,7 +12,7 @@ import { CommonService } from '../../services/common.service';
 export class DashboardComponent implements OnInit {
   posts: any[];
   @ViewChild('addPost', {static: false}) addBtn: ElementRef;
-  @ViewChild('edtPost', {static: false}) editBtn: ElementRef;
+  @ViewChild('editPost', {static: false}) editBtn: ElementRef;
 
   constructor( private postService: PostService,
                private auth: AuthService,

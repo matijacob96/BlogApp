@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
 import { CommonService } from '../../services/common.service';
+import { Post } from '../../models/post.model';
 
 @Component({
   selector: 'app-post',

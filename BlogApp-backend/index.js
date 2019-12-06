@@ -98,3 +98,18 @@ app.post('/api/post/createPost', (req, res) => {
         })
     });
 })
+
+app.post('/api/post/updatePost', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true }, function(err) {
+        if (err) throw err;
+        Post.update({ _id: req.body.id }, { title: req.body.title, text: req.body.text },
+            (err, doc) => {
+                if (err) throw err;
+                return res.status(200).json({
+                    status: 'success',
+                    data: doc
+                });
+            }
+        );
+    });
+});
