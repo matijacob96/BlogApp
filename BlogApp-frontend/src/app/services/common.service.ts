@@ -9,8 +9,10 @@ export class CommonService {
 
   public postToAdd_Observable = new Subject();
   public postToEdit_Observable = new Subject();
+  public postToDelete_Observable = new Subject();
   
   postToEdit: Post;
+  postToDelete: Post;
 
   constructor() {
     this.postToEdit = new Post('','');
@@ -38,5 +40,14 @@ export class CommonService {
     this.postToEdit = new Post('','');
     this.postToEdit.setId('');
     this.notifyPostToAdd();
+  }
+
+  setPostToDelete(post){
+    this.postToDelete = new Post('','');
+    this.postToDelete.setId(post._id);
+    this.notifyPostDelete();
+  }
+  notifyPostDelete() {
+    this.postToDelete_Observable.next();
   }
 }
